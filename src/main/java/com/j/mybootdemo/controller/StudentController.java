@@ -3,11 +3,9 @@ package com.j.mybootdemo.controller;
 import com.j.mybootdemo.models.Course;
 import com.j.mybootdemo.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -28,17 +26,13 @@ public class StudentController {
     }
 
     @PostMapping("/students/{studentId}/courses")
-    public ResponseEntity<Void> registerStudentForCourse(
+    public ResponseEntity<Object> registerStudentForCourse(
             @PathVariable String studentId, @RequestBody Course newCourse) {
 
         Course course = studentService.addCourse(studentId, newCourse);
-
         if (course == null)
             return ResponseEntity.noContent().build();
 
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path(
-                "/{id}").buildAndExpand(course.getId()).toUri();
-
-        return ResponseEntity.created(location).build();
+        return new ResponseEntity<>("New course created ", HttpStatus.CREATED);
     }
 }

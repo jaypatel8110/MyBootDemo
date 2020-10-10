@@ -6,9 +6,9 @@ import org.json.JSONException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.skyscreamer.jsonassert.JSONAssert;
-import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -21,24 +21,24 @@ import static org.junit.Assert.assertTrue;
 
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = MyBootDemoApplication.class,webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = MyBootDemoApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class StudentControllerTest {
 
     @LocalServerPort
     private int port;
 
-    TestRestTemplate testRestTemplate =new TestRestTemplate();
-    HttpHeaders headers= new HttpHeaders();
+    TestRestTemplate testRestTemplate = new TestRestTemplate();
+    HttpHeaders headers = new HttpHeaders();
 
     @Test
     public void testRetrieveStudentCourse() throws JSONException {
-        HttpEntity<String>entity = new HttpEntity<String>(null,headers);
-        ResponseEntity<String> response=testRestTemplate.exchange(
+        HttpEntity<String> entity = new HttpEntity<String>(null, headers);
+        ResponseEntity<String> response = testRestTemplate.exchange(
                 createURLWithPort("/students/Student1/courses/Course1"),
                 HttpMethod.GET, entity, String.class);
 
         String expected = "{id:Course1,name:Spring,description:10Steps}";
-        JSONAssert.assertEquals(expected,response.getBody(),false);
+        JSONAssert.assertEquals(expected, response.getBody(), false);
     }
 
     @Test
@@ -51,13 +51,11 @@ public class StudentControllerTest {
         ResponseEntity<String> response = testRestTemplate.exchange(
                 createURLWithPort("/students/Student1/courses"),
                 HttpMethod.POST, entity, String.class);
-
-        String actual=response.getHeaders().get(HttpHeaders.LOCATION).get(0);
-        assertTrue(actual.contains("/students/Student1/courses/"));
+        assertTrue(response.getBody().contains("New course created") && response.getStatusCode().is2xxSuccessful());
 
     }
 
-    private String  createURLWithPort(String uri) {
+    private String createURLWithPort(String uri) {
         return "http://localhost:" + port + uri;
     }
 
