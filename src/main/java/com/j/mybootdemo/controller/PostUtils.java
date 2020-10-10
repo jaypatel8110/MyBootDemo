@@ -4,7 +4,7 @@ import com.j.mybootdemo.models.Student;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/api")
 public class PostUtils {
 
     @PostMapping("/putgreet")
