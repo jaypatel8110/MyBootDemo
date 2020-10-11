@@ -1,4 +1,4 @@
-package com.j.mybootdemo.repository;
+package com.j.mybootdemo.repository.mongodb;
 
 
 import com.j.mybootdemo.models.Employee;

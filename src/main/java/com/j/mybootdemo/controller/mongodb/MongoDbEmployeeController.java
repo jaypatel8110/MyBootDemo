@@ -1,9 +1,9 @@
-package com.j.mybootdemo.controller;
+package com.j.mybootdemo.controller.mongodb;
 
 
 
 import com.j.mybootdemo.models.Employee;
-import com.j.mybootdemo.repository.EmployeeRepository;
+import com.j.mybootdemo.repository.mongodb.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
